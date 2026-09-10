@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jigsaw</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ 1. Upload ============ -->
+<section id="screen-upload" class="screen center">
+  <div class="card">
+    <h1>Jigsaw</h1>
+    <p class="sub">Pick a photo, choose how many pieces, and start solving.</p>
+
+    <label id="dropzone" for="file-input">
+      <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <path d="M21 15l-5-5L5 21"></path>
+      </svg>
+      <strong>Drop an image here</strong>
+      <span>or click to browse &mdash; PNG or JPEG</span>
+    </label>
+    <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" hidden>
+    <p id="upload-error" class="error" hidden></p>
+  </div>
+</section>
+
+<!-- ============ 2. Setup ============ -->
+<section id="screen-setup" class="screen center" hidden>
+  <div class="card wide">
+    <h2>How many pieces?</h2>
+    <div class="setup-body">
+      <div class="preview-wrap"><img id="setup-preview" alt="Selected image"></div>
+      <div id="count-list" class="count-list"></div>
+    </div>
+    <div class="row end">
+      <button id="setup-back" class="btn ghost">Choose another image</button>
+      <button id="setup-start" class="btn primary">Start puzzle</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. Game ============ -->
+<section id="screen-game" class="screen game" hidden>
+  <header id="toolbar">
+    <div class="tb-group">
+      <button id="btn-new" class="btn ghost sm">New puzzle</button>
+    </div>
+
+    <div class="tb-group stats">
+      <div class="stat">
+        <button id="btn-pause" class="icon" title="Pause / resume (P)">&#10073;&#10073;</button>
+        <span id="timer" class="mono">00:00</span>
+      </div>
+      <div class="stat grow">
+        <span id="counter" class="muted">0 / 0 placed</span>
+        <div class="bar"><div id="bar-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="tb-group">
+      <label class="sel"><span>Table</span><select id="bg-select"></select></label>
+      <button id="btn-thumb" class="btn ghost sm" title="Toggle reference image (H)">Preview</button>
+      <button id="btn-sound" class="icon" title="Sound">&#128266;</button>
+      <span class="zoom">
+        <button id="btn-zoom-out" class="icon" title="Zoom out">&minus;</button>
+        <button id="btn-fit" class="icon" title="Fit to screen (F)">&#9974;</button>
+        <button id="btn-zoom-in" class="icon" title="Zoom in">+</button>
+      </span>
+    </div>
+  </header>
+
+  <div id="stage">
+    <canvas id="board"></canvas>
+
+    <div id="thumb" class="thumb" hidden>
+      <div class="thumb-bar" id="thumb-bar" title="Drag to move">
+        <span>Reference</span>
+        <button id="thumb-close" class="icon tiny" title="Hide">&times;</button>
+      </div>
+      <img id="thumb-img" alt="Reference of the full image">
+    </div>
+
+    <div id="paused-veil" hidden><div class="veil-card">Paused<small>Press P or the pause button to resume</small></div></div>
+
+    <div id="complete" class="done-card" hidden>
+      <h3>Puzzle complete</h3>
+      <div class="done-stats">
+        <div><span class="k">Time</span><span id="final-time" class="mono v">00:00</span></div>
+        <div><span class="k">Pieces</span><span id="final-pieces" class="v">0</span></div>
+      </div>
+      <div class="row">
+        <button id="btn-admire" class="btn ghost">Admire it</button>
+        <button id="btn-complete-new" class="btn primary">New puzzle</button>
+      </div>
+    </div>
+
+    <button id="btn-summary" class="btn ghost sm floating" hidden>Show summary</button>
+    <div id="toast" class="toast" hidden></div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
